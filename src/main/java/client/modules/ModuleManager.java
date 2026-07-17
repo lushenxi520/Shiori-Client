@@ -45,7 +45,7 @@ public class ModuleManager {
          new NameTags(),
          new ChestStealer(),
          new GhostHand(),
-         new InventoryCleaner(),
+         new InventoryManager(),
          new Scaffold(),
          new AntiBots(),
          new TargetHUD(),

@@ -47,7 +47,7 @@ public class ChestStealer extends Module {
    private final FloatValue delay = ValueBuilder.create(this, "Delay (Ticks)")
       .setDefaultFloatValue(3.0F)
       .setFloatStep(1.0F)
-      .setMinFloatValue(3.0F)
+      .setMinFloatValue(1.0F)
       .setMaxFloatValue(10.0F)
       .build()
       .getFloatValue();
@@ -225,21 +225,21 @@ public class ChestStealer extends Module {
          return !(score <= bestScore);
       } else if (stack.getItem() == Items.COMPASS) {
          return !InventoryUtils.hasItem(stack.getItem());
-      } else if (stack.getItem() == Items.WATER_BUCKET && InventoryUtils.getItemCount(Items.WATER_BUCKET) >= InventoryCleaner.getWaterBucketCount()) {
+      } else if (stack.getItem() == Items.WATER_BUCKET && InventoryUtils.getItemCount(Items.WATER_BUCKET) >= InventoryManager.getWaterBucketCount()) {
          return false;
-      } else if (stack.getItem() == Items.LAVA_BUCKET && InventoryUtils.getItemCount(Items.LAVA_BUCKET) >= InventoryCleaner.getLavaBucketCount()) {
+      } else if (stack.getItem() == Items.LAVA_BUCKET && InventoryUtils.getItemCount(Items.LAVA_BUCKET) >= InventoryManager.getLavaBucketCount()) {
          return false;
       } else if (stack.getItem() instanceof BlockItem
          && Scaffold.isValidStack(stack)
-         && InventoryUtils.getBlockCountInInventory() + stack.getCount() >= InventoryCleaner.getMaxBlockSize()) {
+         && InventoryUtils.getBlockCountInInventory() + stack.getCount() >= InventoryManager.getMaxBlockSize()) {
          return false;
-      } else if (stack.getItem() == Items.ARROW && InventoryUtils.getItemCount(Items.ARROW) + stack.getCount() >= InventoryCleaner.getMaxArrowSize()) {
+      } else if (stack.getItem() == Items.ARROW && InventoryUtils.getItemCount(Items.ARROW) + stack.getCount() >= InventoryManager.getMaxArrowSize()) {
          return false;
       } else if (stack.getItem() instanceof FishingRodItem && InventoryUtils.getItemCount(Items.FISHING_ROD) >= 1) {
          return false;
       } else if (stack.getItem() != Items.SNOWBALL && stack.getItem() != Items.EGG
-         || InventoryUtils.getItemCount(Items.SNOWBALL) + InventoryUtils.getItemCount(Items.EGG) + stack.getCount() < InventoryCleaner.getMaxProjectileSize()
-            && InventoryCleaner.shouldKeepProjectile()) {
+         || InventoryUtils.getItemCount(Items.SNOWBALL) + InventoryUtils.getItemCount(Items.EGG) + stack.getCount() < InventoryManager.getMaxProjectileSize()
+            && InventoryManager.shouldKeepProjectile()) {
          return stack.getItem() instanceof ItemNameBlockItem ? false : InventoryUtils.isCommonItemUseful(stack);
       } else {
          return false;

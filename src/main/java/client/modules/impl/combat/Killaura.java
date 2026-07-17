@@ -83,7 +83,7 @@ public class Killaura extends Module {
    BooleanValue attackMobs = ValueBuilder.create(this, "Attack Mobs").setDefaultBooleanValue(false).build().getBooleanValue();
    BooleanValue multi = ValueBuilder.create(this, "Multi Attack").setDefaultBooleanValue(false).build().getBooleanValue();
    BooleanValue infSwitch = ValueBuilder.create(this, "Infinity Switch").setDefaultBooleanValue(false).build().getBooleanValue();
-   BooleanValue moreParticles = ValueBuilder.create(this, "More Particles").setDefaultBooleanValue(false).build().getBooleanValue();
+   ModeValue particles = ValueBuilder.create(this, "Particles").setModes("Off", "More Particles", "Better Particles").setDefaultModeIndex(0).build().getModeValue();
    public BooleanValue keepSprint = ValueBuilder.create(this, "Keep Sprint").setDefaultBooleanValue(true).build().getBooleanValue();
    BooleanValue onlyHurtTime = ValueBuilder.create(this, "Only HurtTime").setDefaultBooleanValue(false).build().getBooleanValue();
    FloatValue aimRange = ValueBuilder.create(this, "Aim Range")
@@ -428,9 +428,14 @@ public class Killaura extends Module {
 
       mc.gameMode.attack(mc.player, entity);
       mc.player.swing(InteractionHand.MAIN_HAND);
-      if (this.moreParticles.getCurrentValue()) {
+      if (this.particles.isCurrentMode("More Particles")) {
          mc.player.magicCrit(entity);
          mc.player.crit(entity);
+      } else if (this.particles.isCurrentMode("Better Particles")) {
+         if (!(entity instanceof LivingEntity) || ((LivingEntity) entity).hurtTime == 0) {
+            mc.player.magicCrit(entity);
+            mc.player.crit(entity);
+         }
       }
 
       mc.player.setYRot(currentYaw);
