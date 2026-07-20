@@ -11,13 +11,14 @@ import com.mojang.blaze3d.vertex.BufferBuilder.RenderedBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import java.awt.Color;
 import net.minecraft.client.Camera;
+import com.mojang.blaze3d.vertex.*;
+import org.joml.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.FastColor.ARGB32;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 public class RenderUtils {
@@ -442,6 +443,17 @@ public class RenderUtils {
       bufferBuilder.vertex(matrix, minX, minY, maxZ).endVertex();
       bufferBuilder.vertex(matrix, minX, maxY, maxZ).endVertex();
       bufferBuilder.vertex(matrix, minX, maxY, minZ).endVertex();
+      BufferUploader.drawWithShader(bufferBuilder.end());
+   }
+
+   public static void blit(float x, float y, float width, float height, PoseStack poseStack) {
+      Matrix4f matrix4f = poseStack.last().pose();
+      BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+      bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+      bufferBuilder.vertex(matrix4f, x, y, 0).uv(0, 0).endVertex();
+      bufferBuilder.vertex(matrix4f, x, y + height, 0).uv(0, 1).endVertex();
+      bufferBuilder.vertex(matrix4f, x + width, y + height, 0).uv(1, 1).endVertex();
+      bufferBuilder.vertex(matrix4f, x + width, y, 0).uv(1, 0).endVertex();
       BufferUploader.drawWithShader(bufferBuilder.end());
    }
 }

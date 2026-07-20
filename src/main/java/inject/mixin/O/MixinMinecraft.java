@@ -1,9 +1,7 @@
 package inject.mixin.O;
 
-import client.gui.WelcomeScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.main.GameConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -58,9 +56,6 @@ public abstract class MixinMinecraft {
     @Unique
     private long shiori_NextGeneration$lastFrame;
 
-    @Unique
-    private boolean shiori$welcomeScreenShown = false;
-
     @Inject(
             method = "createTitle",
             at = @At("HEAD"),
@@ -68,19 +63,6 @@ public abstract class MixinMinecraft {
     )
     private void onCreateTitle(CallbackInfoReturnable<String> cir) {
         cir.setReturnValue("Shiori");
-    }
-
-    @Inject(
-            method = "setScreen",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void onSetScreen(Screen screen, CallbackInfo ci) {
-        if (!shiori$welcomeScreenShown && screen instanceof TitleScreen && !(screen instanceof WelcomeScreen)) {
-            shiori$welcomeScreenShown = true;
-            setScreen(new WelcomeScreen());
-            ci.cancel();
-        }
     }
 
     @Inject(

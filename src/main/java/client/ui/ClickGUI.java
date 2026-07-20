@@ -43,6 +43,9 @@ public class ClickGUI extends Screen {
     private static final int BG_SURFACE = 0xFF14141A;
     private static final int BG_ELEVATED = 0xFF1A1A24;
     private static final int BG_HOVER = 0xFF242438;
+    private static final int BG_BUTTON_SEMI = 0x18FFFFFF;
+    private static final int BG_BUTTON_HOVER = 0x30FFFFFF;
+    private static final int BG_BUTTON_SELECTED = 0x40FFFFFF;
     private static final int ACCENT = 0xFF7C5CFC;
     private static final int ACCENT_SECONDARY = 0xFF5BC0EB;
     private static final int TEXT_PRIMARY = 0xFFEEEEF0;

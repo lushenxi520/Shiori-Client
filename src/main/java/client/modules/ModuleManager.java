@@ -66,6 +66,7 @@ public class ModuleManager {
          new AutoTools(),
          new ViewClip(),
          new Disabler(),
+         new TestDis(),
          new Projectile(),
          new TimeChanger(),
          new FullBright(),
